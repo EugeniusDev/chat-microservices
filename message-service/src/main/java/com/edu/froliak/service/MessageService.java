@@ -79,8 +79,6 @@ public class MessageService {
     public Message updateMessage(Long messageId, MessageUpdateDTO messageUpdateDTO) {
         Message existingMessage = getMessageById(messageId);
 
-        // todo перевірка прав на редагування (порівняти existingMessage.getSenderId() з ID поточного користувача)
-
         messageMapper.updateMessageFromDto(messageUpdateDTO, existingMessage);
         Message updatedMessage = messageRepository.save(existingMessage);
         log.info("Оновлено повідомлення з ID: {}", updatedMessage.getId());
@@ -90,7 +88,6 @@ public class MessageService {
     @Transactional
     public void deleteMessage(Long messageId) {
         Message existingMessage = getMessageById(messageId);
-        //todo перевірка прав на видалення
 
         log.warn("Видалення повідомлення з ID: {}", messageId);
         messageRepository.delete(existingMessage);

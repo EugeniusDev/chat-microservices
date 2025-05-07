@@ -14,10 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring"
-        //,nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE // Поки приберемо, щоб бачити, чи не в цьому проблема
-        // uses = {} // Поки приберемо uses, щоб максимально спростити
-)
+@Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface ChatRoomMapper {
 
     @Mapping(target = "id", source = "id")
