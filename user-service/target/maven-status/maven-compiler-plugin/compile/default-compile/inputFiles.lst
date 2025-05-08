@@ -1,0 +1,14 @@
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\exception\GlobalExceptionHandler.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\dto\UserBasicDTO.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\config\SecurityConfig.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\dto\UserCreateDTO.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\model\User.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\UserServiceApplication.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\mapper\UserMapper.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\repository\UserRepository.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\exception\ErrorResponse.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\exception\ResourceNotFoundException.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\dto\UserUpdateDTO.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\service\UserService.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\controller\UserController.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\user-service\src\main\java\com\edu\froliak\dto\UserDTO.java

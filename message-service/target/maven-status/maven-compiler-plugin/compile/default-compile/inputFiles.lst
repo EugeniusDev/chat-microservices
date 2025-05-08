@@ -1,0 +1,14 @@
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\config\SecurityConfig.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\dto\MessageDTO.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\MessageServiceApplication.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\repository\MessageRepository.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\dto\MessageUpdateDTO.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\exception\ErrorResponse.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\exception\ResourceNotFoundException.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\model\Message.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\mapper\MessageMapper.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\exception\GlobalExceptionHandler.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\controller\MessageController.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\service\MessageService.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\dto\MessageCreateDTO.java
+C:\Win-desktop\University\JavaMicroservices\LabWorks\Project\chat-microservices\message-service\src\main\java\com\edu\froliak\dto\UserBasicDTO.java

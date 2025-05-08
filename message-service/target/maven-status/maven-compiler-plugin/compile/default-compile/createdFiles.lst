@@ -1,0 +1,15 @@
+com\edu\froliak\dto\MessageDTO.class
+com\edu\froliak\MessageServiceApplication.class
+com\edu\froliak\config\SecurityConfig.class
+com\edu\froliak\dto\UserBasicDTO.class
+com\edu\froliak\mapper\MessageMapper.class
+com\edu\froliak\dto\MessageUpdateDTO.class
+com\edu\froliak\service\MessageService.class
+com\edu\froliak\controller\MessageController.class
+com\edu\froliak\mapper\MessageMapperImpl.class
+com\edu\froliak\exception\GlobalExceptionHandler.class
+com\edu\froliak\exception\ResourceNotFoundException.class
+com\edu\froliak\dto\MessageCreateDTO.class
+com\edu\froliak\exception\ErrorResponse.class
+com\edu\froliak\model\Message.class
+com\edu\froliak\repository\MessageRepository.class

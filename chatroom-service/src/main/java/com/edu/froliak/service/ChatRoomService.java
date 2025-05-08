@@ -11,15 +11,17 @@ import com.edu.froliak.repository.ChatRoomRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.naming.ServiceUnavailableException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,8 +34,7 @@ public class ChatRoomService {
     private final ChatRoomMapper chatRoomMapper;
     private final RestTemplate restTemplate;
 
-    @Value("${user.service.url}")
-    private String userServiceUrl;
+    private static final String USER_SERVICE_NAME = "user-service";
 
     @Autowired
     public ChatRoomService(ChatRoomRepository chatRoomRepository, ChatRoomMapper chatRoomMapper, RestTemplate restTemplate) {
@@ -45,8 +46,10 @@ public class ChatRoomService {
     @Transactional
     public ChatRoom createChatRoom(ChatRoomCreateDTO createDTO) {
         ChatRoom chatRoom = chatRoomMapper.toChatRoom(createDTO);
-        // chatRoom.setUserIds(new HashSet<>());
-        return chatRoomRepository.save(chatRoom);
+        chatRoom.setUserIds(new HashSet<>());
+        ChatRoom savedRoom = chatRoomRepository.save(chatRoom);
+        log.info("Створено чат-кімнату '{}' з ID: {}", savedRoom.getName(), savedRoom.getId());
+        return savedRoom;
     }
 
     @Transactional(readOnly = true)
@@ -60,7 +63,7 @@ public class ChatRoomService {
         ChatRoomDTO roomDTO = chatRoomMapper.toChatRoomDTO(room);
 
         if (room.getUserIds() != null && !room.getUserIds().isEmpty()) {
-            Set<UserBasicDTO> users = room.getUserIds().stream()
+            Set<UserBasicDTO> users = room.getUserIds().parallelStream()
                     .map(this::fetchUserBasicDetails)
                     .filter(java.util.Objects::nonNull)
                     .collect(Collectors.toSet());
@@ -81,7 +84,9 @@ public class ChatRoomService {
     public ChatRoom updateChatRoom(Long roomId, ChatRoomUpdateDTO updateDTO) {
         ChatRoom existingRoom = getChatRoomEntityById(roomId);
         chatRoomMapper.updateChatRoomFromDto(updateDTO, existingRoom);
-        return chatRoomRepository.save(existingRoom);
+        ChatRoom updatedRoom = chatRoomRepository.save(existingRoom);
+        log.info("Оновлено чат-кімнату з ID: {}", updatedRoom.getId());
+        return updatedRoom;
     }
 
     @Transactional
@@ -89,69 +94,77 @@ public class ChatRoomService {
         if (!chatRoomRepository.existsById(roomId)) {
             throw new ResourceNotFoundException("Чат-кімнату з ID " + roomId + " не знайдено для видалення.");
         }
+        log.warn("Видалення чат-кімнати з ID: {}", roomId);
         chatRoomRepository.deleteById(roomId);
     }
 
     @Transactional
     public ChatRoom addUserToChatRoom(Long roomId, Long userId) {
         ChatRoom room = getChatRoomEntityById(roomId);
-        if (!checkUserExists(userId)) {
-            throw new ResourceNotFoundException("Користувача з ID " + userId + " не знайдено.");
-        }
+        checkUserExists(userId);
+
         if (room.getUserIds().contains(userId)) {
             log.warn("Користувач ID {} вже в кімнаті ID {}", userId, roomId);
             return room;
         }
-        room.getUserIds().add(userId);
-        return chatRoomRepository.save(room);
+        boolean added = room.getUserIds().add(userId);
+        if (added) {
+            log.info("Додано користувача ID {} до кімнати ID {}", userId, roomId);
+            return chatRoomRepository.save(room);
+        }
+        return room;
     }
 
     @Transactional
     public ChatRoom removeUserFromChatRoom(Long roomId, Long userId) {
         ChatRoom room = getChatRoomEntityById(roomId);
-        if (!checkUserExists(userId)) {
-            log.warn("Спроба видалити неіснуючого користувача ID {} з кімнати ID {}", userId, roomId);
-        }
+
         if (!room.getUserIds().contains(userId)) {
-            log.warn("Користувача ID {} немає в кімнаті ID {}", userId, roomId);
+            log.warn("Користувача ID {} немає в кімнаті ID {}, видалення неможливе", userId, roomId);
             return room;
         }
-        room.getUserIds().remove(userId);
-        return chatRoomRepository.save(room);
+        boolean removed = room.getUserIds().remove(userId);
+        if (removed) {
+            log.info("Видалено користувача ID {} з кімнати ID {}", userId, roomId);
+            return chatRoomRepository.save(room);
+        }
+        return room;
     }
 
     @Transactional(readOnly = true)
     public boolean isUserMember(Long roomId, Long userId) {
         ChatRoom room = getChatRoomEntityById(roomId);
-        return room.getUserIds().contains(userId);
+        return room.getUserIds() != null && room.getUserIds().contains(userId);
     }
 
     private UserBasicDTO fetchUserBasicDetails(Long userId) {
+        if (userId == null) return null;
         try {
-            String url = userServiceUrl + "/" + userId;
+            String url = "http://" + USER_SERVICE_NAME + "/api/v1/users/" + userId;
             ResponseEntity<UserBasicDTO> response = restTemplate.getForEntity(url, UserBasicDTO.class);
-            if (response.getStatusCode() == HttpStatus.OK) {
+            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
                 return response.getBody();
             }
-            log.warn("Не вдалося отримати UserBasicDTO для userId {}. Статус: {}", userId, response.getStatusCode());
+            log.warn("Не вдалося отримати UserBasicDTO для userId {} з {}. Статус: {}", userId, USER_SERVICE_NAME, response.getStatusCode());
         } catch (HttpClientErrorException.NotFound ex) {
-            log.warn("Користувач з ID {} не знайдений в user-service.", userId);
-        } catch (Exception ex) {
-            log.error("Помилка при отриманні деталей користувача {} з user-service: {}", userId, ex.getMessage());
+            log.warn("Користувач з ID {} не знайдений в {}.", userId, USER_SERVICE_NAME);
+        } catch (RestClientException ex) {
+            log.error("Помилка RestTemplate при отриманні деталей користувача {} з {}: {}", userId, USER_SERVICE_NAME, ex.getMessage());
         }
         return null;
     }
 
     private boolean checkUserExists(Long userId) {
+        if (userId == null) return false;
         try {
-            String url = userServiceUrl + "/" + userId;
-            restTemplate.getForEntity(url, Void.class);
+            String url = "http://" + USER_SERVICE_NAME + "/api/v1/users/" + userId;
+            restTemplate.headForHeaders(url);
             return true;
         } catch (HttpClientErrorException.NotFound ex) {
             return false;
-        } catch (Exception ex) {
-            log.error("Помилка перевірки існування користувача {} в user-service: {}", userId, ex.getMessage());
-            return false;
+        } catch (RestClientException ex) {
+            log.error("Помилка RestTemplate під час перевірки користувача {} в {}: {}", userId, USER_SERVICE_NAME, ex.getMessage());
+            throw new RestClientException("Сервіс користувачів (" + USER_SERVICE_NAME + ") недоступний для перевірки ID " + userId, ex);
         }
     }
 }

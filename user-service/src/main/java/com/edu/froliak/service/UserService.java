@@ -81,7 +81,6 @@ public class UserService {
         if (!userRepository.existsById(userId)) {
             throw new ResourceNotFoundException("Користувача з ID " + userId + " не знайдено для видалення.");
         }
-
         log.warn("Видалення користувача з ID: {}", userId);
         userRepository.deleteById(userId);
     }

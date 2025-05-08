@@ -1,0 +1,16 @@
+com\edu\froliak\dto\ChatRoomCreateDTO.class
+com\edu\froliak\dto\ChatRoomDTO.class
+com\edu\froliak\model\ChatRoom.class
+com\edu\froliak\repository\ChatRoomRepository.class
+com\edu\froliak\config\SecurityConfig.class
+com\edu\froliak\controller\ChatRoomController.class
+com\edu\froliak\dto\UserBasicDTO.class
+com\edu\froliak\dto\ChatRoomUpdateDTO.class
+com\edu\froliak\exception\GlobalExceptionHandler.class
+com\edu\froliak\mapper\ChatRoomMapperImpl.class
+com\edu\froliak\exception\ResourceNotFoundException.class
+com\edu\froliak\ChatRoomServiceApplication.class
+com\edu\froliak\exception\ErrorResponse.class
+com\edu\froliak\service\ChatRoomService.class
+com\edu\froliak\dto\ChatRoomBasicDTO.class
+com\edu\froliak\mapper\ChatRoomMapper.class

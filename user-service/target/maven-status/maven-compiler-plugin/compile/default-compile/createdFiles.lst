@@ -1,0 +1,15 @@
+com\edu\froliak\dto\UserDTO.class
+com\edu\froliak\UserServiceApplication.class
+com\edu\froliak\config\SecurityConfig.class
+com\edu\froliak\dto\UserBasicDTO.class
+com\edu\froliak\service\UserService.class
+com\edu\froliak\controller\UserController.class
+com\edu\froliak\dto\UserUpdateDTO.class
+com\edu\froliak\exception\GlobalExceptionHandler.class
+com\edu\froliak\exception\ResourceNotFoundException.class
+com\edu\froliak\mapper\UserMapperImpl.class
+com\edu\froliak\dto\UserCreateDTO.class
+com\edu\froliak\model\User.class
+com\edu\froliak\mapper\UserMapper.class
+com\edu\froliak\exception\ErrorResponse.class
+com\edu\froliak\repository\UserRepository.class
