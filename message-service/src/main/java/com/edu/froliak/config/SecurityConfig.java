@@ -16,6 +16,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
+                                .requestMatchers("/api/v1/notifications/**").permitAll()
                                 .requestMatchers("/api/v1/messages/**").permitAll()
                                 .requestMatchers("/api/v1/chatrooms/**/messages").permitAll()
                                 .requestMatchers("/h2-console-message/**").permitAll()
