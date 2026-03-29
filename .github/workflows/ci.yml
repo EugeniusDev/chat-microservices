@@ -27,7 +27,7 @@ jobs:
           for service in user-service chatroom-service message-service; do
             echo "Processing $service..."
             cd $service
-            mvn clean verify # Збірка та запуск тестів [cite: 24, 25]
+            mvn clean verify
             cd ..
           done
 
