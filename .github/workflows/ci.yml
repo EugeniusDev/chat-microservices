@@ -39,3 +39,4 @@ jobs:
           args: >
             -Dsonar.projectKey=EugeniusDev_chat-microservices
             -Dsonar.organization=eugeniusdev
+            -Dsonar.java.binaries=user-service/target/classes,chatroom-service/target/classes,message-service/target/classes
