@@ -21,15 +21,24 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Build and Test all services
-        # Виконуємо компіляцію, packaging та запуск тестів для кожного сервісу
+      - name: Build all services
         run: |
           for service in user-service chatroom-service message-service; do
-            echo "Processing $service..."
+            echo "Building $service..."
             cd $service
-            mvn clean verify
+            mvn clean package -DskipTests
             cd ..
           done
+
+      - name: Run unit and integration tests
+        run: |
+          for service in user-service chatroom-service message-service; do
+            echo "Testing $service..."
+            cd $service
+            mvn verify
+            cd ..
+          done
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v5.0.0
         env:
