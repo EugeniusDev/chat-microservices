@@ -5,4 +5,6 @@ import lombok.Data;
 public class ChatRoomBasicDTO {
     private Long id;
     private String name;
+
+
 }
