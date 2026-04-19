@@ -1,0 +1,23 @@
+# Спільні налаштування бази даних
+database:
+  host: mydb-postgresql
+  port: 5432
+  username: myuser
+  password: mypassword
+  dbName: microservices_db
+
+# Налаштування мікросервісів
+userService:
+  image: user-service:latest
+  replicas: 1
+  port: 8081
+
+chatroomService:
+  image: chatroom-service:latest
+  replicas: 1
+  port: 8082
+
+messageService:
+  image: message-service:latest
+  replicas: 1
+  port: 8083
