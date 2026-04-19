@@ -1,0 +1,4 @@
+minikube start
+kubectl delete deployment chatroom-service message-service user-service
+kubectl apply -f k8s/
+kubectl get pods -w
