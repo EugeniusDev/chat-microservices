@@ -1,0 +1,20 @@
+helm repo add argo https://argoproj.github.io/argo-helm
+helm repo update
+
+kubectl create namespace argocd
+
+# Встановлюємо ArgoCD (вимикаємо зайві репліки, щоб Minikube не "гальмував")
+helm install argocd argo/argo-cd --namespace argocd --set redis.enabled=false --set controller.replicas=1 --set server.replicas=1
+
+kubectl get pods -n argocd -w
+
+отримання пароля:
+$secret = kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}"
+[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($secret))
+
+Логін за замовчуванням — admin
+uuMBKRl3STMMN9GL
+
+Відкрийте доступ до UI. Для цього відкрийте НОВУ вкладку терміналу (+) в IntelliJ і виконайте:
+PowerShell
+kubectl port-forward svc/argocd-server -n argocd 8080:443
