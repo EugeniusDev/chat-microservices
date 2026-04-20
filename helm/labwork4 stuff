@@ -27,3 +27,6 @@ YAML
 spec:
   replicas: 3
 Запуште зміни в репозиторій
+
+потім рефреш на юай і в терміналі
+kubectl get pods -l app=my-app -w
