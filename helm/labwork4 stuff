@@ -16,5 +16,14 @@ $secret = kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="
 uuMBKRl3STMMN9GL
 
 Відкрийте доступ до UI. Для цього відкрийте НОВУ вкладку терміналу (+) в IntelliJ і виконайте:
-PowerShell
 kubectl port-forward svc/argocd-server -n argocd 8080:443
+
+Перевірте, що под дійсно запустився у кластері:
+kubectl get pods -l app=my-app
+
+Внесіть зміни в Git: Відкрийте файл k8s/deployment.yml у вашій IDE і змініть кількість реплік з 1 на 3:
+YAML
+
+spec:
+  replicas: 3
+Запуште зміни в репозиторій
