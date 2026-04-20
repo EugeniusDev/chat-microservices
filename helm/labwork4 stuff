@@ -30,3 +30,8 @@ spec:
 
 потім рефреш на юай і в терміналі
 kubectl get pods -l app=my-app -w
+
+Усі локальні мережеві тунелі (port-forward) також закриваються при перезавантаженні.
+Якщо ви хочете зайти в Web UI ArgoCD, просто відкрийте нову вкладку терміналу
+ і запустіть тунель знову:
+kubectl port-forward svc/argocd-server -n argocd 8080:443
